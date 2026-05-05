@@ -61,7 +61,11 @@ void append_node_json(std::ostringstream& out, FibNode* node) {
     out << "]}";
 }
 
+<<<<<<< HEAD
 } 
+=======
+}  // namespace
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
 
 FibNode::FibNode(int id, double k)
     : zone_id(id),

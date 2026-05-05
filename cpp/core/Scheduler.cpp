@@ -3,7 +3,10 @@
 #include <algorithm>
 #include <cctype>
 #include <cmath>
+<<<<<<< HEAD
 #include <fstream>
+=======
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
 #include <limits>
 #include <sstream>
 #include <stdexcept>
@@ -61,6 +64,7 @@ std::string json_escape(const std::string& input) {
     return out.str();
 }
 
+<<<<<<< HEAD
 void write_scheduler_state_snapshot(const std::string& state_json) {
     std::ofstream output("frontend\\data\\state.json");
     if (output.is_open()) {
@@ -68,6 +72,8 @@ void write_scheduler_state_snapshot(const std::string& state_json) {
     }
 }
 
+=======
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
 double compute_priority_key_for_zone(const Zone& zone, const Depot& nearest) {
     const int clamped_severity = std::max(1, std::min(10, zone.severity));
     const double distance = haversine_km(zone.lat, zone.lng, nearest.lat, nearest.lng);
@@ -84,8 +90,11 @@ struct Scheduler::SchedulerData {
     std::vector<std::string> dispatch_log;
     std::unordered_map<int, std::size_t> zone_index;
     std::unordered_map<int, std::size_t> depot_index;
+<<<<<<< HEAD
     std::unordered_map<int, int> base_food_needed;
     std::unordered_map<int, int> base_medicine_needed;
+=======
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
     bool initialized = false;
 };
 
@@ -146,10 +155,13 @@ Scheduler::Scheduler(std::vector<Zone>& zones,
     data_->zones = zones;
     data_->depots = depots;
     data_->roads = roads;
+<<<<<<< HEAD
     for (const Zone& zone : data_->zones) {
         data_->base_food_needed[zone.id] = zone.food_needed;
         data_->base_medicine_needed[zone.id] = zone.medicine_needed;
     }
+=======
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
 }
 
 Scheduler::~Scheduler() = default;
@@ -270,6 +282,7 @@ void Scheduler::simulate_road_block(int road_idx) {
 
     const int log_id = road.id >= 0 ? road.id : road_idx;
     data_->dispatch_log.push_back("Road " + std::to_string(log_id) + " marked as blocked.");
+<<<<<<< HEAD
     write_scheduler_state_snapshot(get_full_state_json());
 }
 
@@ -323,6 +336,13 @@ void Scheduler::simulate_severity_update(int zone_id, int new_severity) {
     }
 
     write_scheduler_state_snapshot(get_full_state_json());
+=======
+}
+
+void Scheduler::simulate_severity_update(int zone_id, int new_severity) {
+    update_zone_severity(zone_id, new_severity);
+    rebalance_heap_after_update(zone_id);
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
 }
 
 std::vector<std::string> Scheduler::get_autocomplete(const std::string& prefix) {

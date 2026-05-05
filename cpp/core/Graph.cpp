@@ -6,7 +6,10 @@
 #include <queue>
 #include <sstream>
 #include <stdexcept>
+<<<<<<< HEAD
 #include <unordered_map>
+=======
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
 
 namespace {
 
@@ -37,11 +40,14 @@ std::string json_escape(const std::string& input) {
     return out.str();
 }
 
+<<<<<<< HEAD
 std::unordered_map<const Graph*, std::vector<bool>>& blocked_road_registry() {
     static std::unordered_map<const Graph*, std::vector<bool>> registry;
     return registry;
 }
 
+=======
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
 }  // namespace
 
 Graph::Graph(int n, UnionFind* uf, SegmentTree* st)
@@ -53,8 +59,11 @@ Graph::Graph(int n, UnionFind* uf, SegmentTree* st)
     if (n < 0) {
         throw std::invalid_argument("Graph node count cannot be negative");
     }
+<<<<<<< HEAD
 
     blocked_road_registry()[this] = {};
+=======
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
 }
 
 void Graph::add_road(int u, int v, double dist) {
@@ -72,7 +81,10 @@ void Graph::add_road(int u, int v, double dist) {
     road.current_weight = dist;
     road.is_blocked = false;
     roads.push_back(road);
+<<<<<<< HEAD
     blocked_road_registry()[this].push_back(false);
+=======
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
 
     adj[static_cast<std::size_t>(u)].push_back({v, dist});
     adj[static_cast<std::size_t>(v)].push_back({u, dist});
@@ -90,11 +102,14 @@ void Graph::block_road(int road_idx) {
     Road& road = roads[static_cast<std::size_t>(road_idx)];
     road.is_blocked = true;
     road.current_weight = std::numeric_limits<double>::infinity();
+<<<<<<< HEAD
     std::vector<bool>& blocked_roads = blocked_road_registry()[this];
     if (static_cast<std::size_t>(road_idx) >= blocked_roads.size()) {
         blocked_roads.resize(roads.size(), false);
     }
     blocked_roads[static_cast<std::size_t>(road_idx)] = true;
+=======
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
 
     for (auto& edge : adj[static_cast<std::size_t>(road.from_id)]) {
         if (edge.first == road.to_id) {
@@ -108,6 +123,7 @@ void Graph::block_road(int road_idx) {
     }
 
     if (connectivity != nullptr) {
+<<<<<<< HEAD
         *connectivity = UnionFind(num_nodes);
         for (std::size_t i = 0; i < roads.size(); ++i) {
             if (i < blocked_roads.size() && blocked_roads[i]) {
@@ -115,6 +131,9 @@ void Graph::block_road(int road_idx) {
             }
             connectivity->union_zones(roads[i].from_id, roads[i].to_id);
         }
+=======
+        connectivity->block_road(road.from_id, road.to_id);
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
     }
 
     if (road_weights != nullptr) {

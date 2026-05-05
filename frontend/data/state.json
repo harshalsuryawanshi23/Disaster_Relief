@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "cycle": 2,
+=======
+  "cycle": 0,
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
   "depots": [
     {
       "food_stock": 5000,
@@ -11,12 +15,20 @@
       "name": "Pune Depot"
     },
     {
+<<<<<<< HEAD
       "food_stock": 2800,
+=======
+      "food_stock": 4200,
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
       "id": 2,
       "is_active": true,
       "lat": 19.076,
       "lng": 72.8777,
+<<<<<<< HEAD
       "medicine_stock": 1150,
+=======
+      "medicine_stock": 1700,
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
       "name": "Mumbai Port Depot"
     },
     {
@@ -38,6 +50,7 @@
       "name": "Aurangabad Depot"
     }
   ],
+<<<<<<< HEAD
   "dispatch_log": [
     {
       "cycle": 1,
@@ -65,6 +78,11 @@
   ],
   "heap": {
     "min_id": 4,
+=======
+  "dispatch_log": [],
+  "heap": {
+    "min_id": 3,
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
     "nodes": [
       {
         "degree": 0,
@@ -104,14 +122,34 @@
       },
       {
         "degree": 0,
+<<<<<<< HEAD
+=======
+        "id": 4,
+        "key": 3000.0,
+        "marked": false
+      },
+      {
+        "degree": 0,
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
         "id": 2,
         "key": 4000.0,
         "marked": false
       },
       {
         "degree": 0,
+<<<<<<< HEAD
         "id": 4,
         "key": 3000.0,
+=======
+        "id": 1,
+        "key": 2140.12,
+        "marked": false
+      },
+      {
+        "degree": 0,
+        "id": 3,
+        "key": 1000.0,
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
         "marked": false
       }
     ]
@@ -120,7 +158,11 @@
     "levels": [
       [
         {
+<<<<<<< HEAD
           "depot_id": 2,
+=======
+          "depot_id": 4,
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
           "key": 2800.0
         },
         {
@@ -130,7 +172,11 @@
       ],
       [
         {
+<<<<<<< HEAD
           "depot_id": 2,
+=======
+          "depot_id": 4,
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
           "key": 2800.0
         },
         {
@@ -138,6 +184,13 @@
           "key": 3600.0
         },
         {
+<<<<<<< HEAD
+=======
+          "depot_id": 2,
+          "key": 4200.0
+        },
+        {
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
           "depot_id": 1,
           "key": 5000.0
         }
@@ -173,9 +226,15 @@
   },
   "zones": [
     {
+<<<<<<< HEAD
       "assigned_depot": 2,
       "id": 1,
       "is_served": true,
+=======
+      "assigned_depot": -1,
+      "id": 1,
+      "is_served": false,
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
       "lat": 19.9975,
       "lng": 73.7898,
       "name": "Nashik",
@@ -191,9 +250,15 @@
       "severity": 6
     },
     {
+<<<<<<< HEAD
       "assigned_depot": 2,
       "id": 3,
       "is_served": true,
+=======
+      "assigned_depot": -1,
+      "id": 3,
+      "is_served": false,
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
       "lat": 19.076,
       "lng": 72.8777,
       "name": "Mumbai",

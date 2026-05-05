@@ -117,9 +117,13 @@ double compute_priority_key(const Zone& zone, const Depot& depot) {
 const Depot* select_nearest_usable_depot(const Zone& zone,
                                          const QuadTree& depot_tree,
                                          const std::vector<Depot>& depots,
+<<<<<<< HEAD
                                          const std::unordered_map<int, std::size_t>& depot_index,
                                          Graph* graph,
                                          const std::vector<Zone>& zones) {
+=======
+                                         const std::unordered_map<int, std::size_t>& depot_index) {
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
     const Depot* best = nullptr;
     double best_distance = std::numeric_limits<double>::infinity();
 
@@ -128,10 +132,15 @@ const Depot* select_nearest_usable_depot(const Zone& zone,
         auto nearest_it = depot_index.find(nearest_point.entity_id);
         if (nearest_it != depot_index.end()) {
             const Depot& candidate = depots[nearest_it->second];
+<<<<<<< HEAD
             const int source_zone_id = nearest_zone_to_depot(candidate, zones);
             if (candidate.is_active &&
                 (candidate.food_stock > 0 || candidate.medicine_stock > 0) &&
                 (graph == nullptr || graph->zones_connected(source_zone_id, zone.id))) {
+=======
+            if (candidate.is_active &&
+                (candidate.food_stock > 0 || candidate.medicine_stock > 0)) {
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
                 best = &candidate;
                 best_distance = haversine_km(zone.lat, zone.lng, candidate.lat, candidate.lng);
             }
@@ -143,10 +152,13 @@ const Depot* select_nearest_usable_depot(const Zone& zone,
         if (!depot.is_active || (depot.food_stock <= 0 && depot.medicine_stock <= 0)) {
             continue;
         }
+<<<<<<< HEAD
         const int source_zone_id = nearest_zone_to_depot(depot, zones);
         if (graph != nullptr && !graph->zones_connected(source_zone_id, zone.id)) {
             continue;
         }
+=======
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
         const double distance = haversine_km(zone.lat, zone.lng, depot.lat, depot.lng);
         if (distance < best_distance) {
             best_distance = distance;
@@ -161,16 +173,24 @@ std::unique_ptr<FibonacciHeap> rebuild_priority_queue(
     std::vector<Zone>& zones,
     const QuadTree& depot_tree,
     const std::vector<Depot>& depots,
+<<<<<<< HEAD
     const std::unordered_map<int, std::size_t>& depot_index,
     Graph* graph) {
+=======
+    const std::unordered_map<int, std::size_t>& depot_index) {
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
     auto heap = std::make_unique<FibonacciHeap>();
     for (Zone& zone : zones) {
         zone.heap_node = nullptr;
         if (zone.is_served) {
             continue;
         }
+<<<<<<< HEAD
         const Depot* depot = select_nearest_usable_depot(zone, depot_tree, depots, depot_index,
                                                          graph, zones);
+=======
+        const Depot* depot = select_nearest_usable_depot(zone, depot_tree, depots, depot_index);
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
         if (depot == nullptr) {
             continue;
         }
@@ -186,8 +206,11 @@ struct SimulationContext {
     std::unordered_map<int, std::size_t> zone_index;
     std::unordered_map<int, std::size_t> depot_index;
     std::unordered_map<int, double> depot_food_key;
+<<<<<<< HEAD
     std::unordered_map<int, int> base_food_needed;
     std::unordered_map<int, int> base_medicine_needed;
+=======
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
     std::unique_ptr<QuadTree> depot_tree;
     std::unique_ptr<FibonacciHeap> heap;
     std::unique_ptr<UnionFind> union_find;
@@ -309,8 +332,11 @@ SimulationContext create_context(const std::string& interactive_output_path) {
 
     for (std::size_t i = 0; i < context.zones.size(); ++i) {
         context.zone_index[context.zones[i].id] = i;
+<<<<<<< HEAD
         context.base_food_needed[context.zones[i].id] = context.zones[i].food_needed;
         context.base_medicine_needed[context.zones[i].id] = context.zones[i].medicine_needed;
+=======
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
     }
     for (std::size_t i = 0; i < context.depots.size(); ++i) {
         context.depot_index[context.depots[i].id] = i;
@@ -356,7 +382,11 @@ SimulationContext create_context(const std::string& interactive_output_path) {
     }
 
     context.heap = rebuild_priority_queue(context.zones, *context.depot_tree, context.depots,
+<<<<<<< HEAD
                                           context.depot_index, context.graph.get());
+=======
+                                          context.depot_index);
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
     return context;
 }
 
@@ -376,17 +406,25 @@ bool run_cycle(SimulationContext& context) {
     }
 
     Zone& zone = context.zones[zone_it->second];
+<<<<<<< HEAD
     zone.heap_node = nullptr;
+=======
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
     if (zone.is_served) {
         return false;
     }
 
     const Depot* chosen = select_nearest_usable_depot(zone, *context.depot_tree, context.depots,
+<<<<<<< HEAD
                                                       context.depot_index, context.graph.get(),
                                                       context.zones);
     if (chosen == nullptr) {
         context.heap = rebuild_priority_queue(context.zones, *context.depot_tree, context.depots,
                                               context.depot_index, context.graph.get());
+=======
+                                                      context.depot_index);
+    if (chosen == nullptr) {
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
         return false;
     }
 
@@ -396,7 +434,11 @@ bool run_cycle(SimulationContext& context) {
     if (food == 0 && medicine == 0) {
         depot.is_active = false;
         context.heap = rebuild_priority_queue(context.zones, *context.depot_tree, context.depots,
+<<<<<<< HEAD
                                               context.depot_index, context.graph.get());
+=======
+                                              context.depot_index);
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
         return false;
     }
 
@@ -404,9 +446,14 @@ bool run_cycle(SimulationContext& context) {
     std::pair<double, std::vector<int>> route_info =
         context.router->shortest_path(source_zone_id, zone.id);
     if (route_info.second.empty()) {
+<<<<<<< HEAD
         context.heap = rebuild_priority_queue(context.zones, *context.depot_tree, context.depots,
                                               context.depot_index, context.graph.get());
         return false;
+=======
+        route_info.first = haversine_km(depot.lat, depot.lng, zone.lat, zone.lng);
+        route_info.second = {source_zone_id, zone.id};
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
     }
 
     zone.food_needed = std::max(0, zone.food_needed - food);
@@ -435,7 +482,11 @@ bool run_cycle(SimulationContext& context) {
     context.dispatch_log.push_back(entry);
 
     context.heap = rebuild_priority_queue(context.zones, *context.depot_tree, context.depots,
+<<<<<<< HEAD
                                           context.depot_index, context.graph.get());
+=======
+                                          context.depot_index);
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
     if (context.exporter) {
         context.exporter->export_state(context.cycle, context.heap->export_json(), context.zones,
                                        context.depots, context.dispatch_log,
@@ -451,7 +502,11 @@ void export_current_state(SimulationContext& context) {
     }
     if (!context.heap) {
         context.heap = rebuild_priority_queue(context.zones, *context.depot_tree, context.depots,
+<<<<<<< HEAD
                                               context.depot_index, context.graph.get());
+=======
+                                              context.depot_index);
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
     }
     context.exporter->export_state(context.cycle, context.heap->export_json(), context.zones,
                                    context.depots, context.dispatch_log,
@@ -485,9 +540,12 @@ int main(int argc, char* argv[]) {
                 int road_idx = -1;
                 std::cin >> road_idx;
                 context.graph->block_road(road_idx);
+<<<<<<< HEAD
                 context.heap = rebuild_priority_queue(context.zones, *context.depot_tree,
                                                       context.depots, context.depot_index,
                                                       context.graph.get());
+=======
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
                 export_current_state(context);
             } else if (command == "update") {
                 int zone_id = -1;
@@ -495,6 +553,7 @@ int main(int argc, char* argv[]) {
                 std::cin >> zone_id >> new_severity;
                 auto zone_it = context.zone_index.find(zone_id);
                 if (zone_it != context.zone_index.end()) {
+<<<<<<< HEAD
                     Zone& zone = context.zones[zone_it->second];
                     zone.severity = std::max(1, std::min(10, new_severity));
                     if (zone.is_served) {
@@ -510,6 +569,11 @@ int main(int argc, char* argv[]) {
                     context.heap = rebuild_priority_queue(context.zones, *context.depot_tree,
                                                           context.depots, context.depot_index,
                                                           context.graph.get());
+=======
+                    context.zones[zone_it->second].severity = new_severity;
+                    context.heap = rebuild_priority_queue(context.zones, *context.depot_tree,
+                                                          context.depots, context.depot_index);
+>>>>>>> c765bd06c2e6e040098752c41d340a3e3a323419
                 }
                 export_current_state(context);
             } else if (command == "search") {
