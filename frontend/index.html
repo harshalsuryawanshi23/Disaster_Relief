@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disaster Relief Coordinator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      /* Heap min node pulse — applied via JS class */
+      .heap-min-pulse {
+        animation: heapPulse 2s ease-in-out infinite;
+      }
+      @keyframes heapPulse {
+        0%,
+        100% {
+          filter: drop-shadow(0 0 6px rgba(199, 123, 39, 0.5));
+        }
+        50% {
+          filter: drop-shadow(0 0 18px rgba(199, 123, 39, 0.9));
+        }
+      }
+
+      /* Smooth panel fade-in on load */
+      .panel {
+        animation: panelFadeIn 0.4s ease forwards;
+      }
+      @keyframes panelFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Dispatch log entry slide-in */
+      .log-card {
+        animation: logSlide 0.3s ease forwards;
+      }
+      @keyframes logSlide {
+        from {
+          opacity: 0;
+          transform: translateX(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* Subtle map overlay texture */
+      .panel-map::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: linear-gradient(
+          180deg,
+          rgba(250, 247, 242, 0.4) 0%,
+          transparent 100%
+        );
+        pointer-events: none;
+        z-index: 500;
+        border-radius: 18px 18px 0 0;
+      }
+    </style>
+  </head>
+  <body>
+    <svg class="svg-defs" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient
+          id="heapNodeGradient"
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="100%"
+        >
+          <stop offset="0%" stop-color="#3d5c4a"></stop>
+          <stop offset="100%" stop-color="#1e3028"></stop>
+        </linearGradient>
+        <linearGradient
+          id="heapMinGradient"
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="100%"
+        >
+          <stop offset="0%" stop-color="#e8a84a"></stop>
+          <stop offset="100%" stop-color="#b86e1a"></stop>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="app-shell">
+      <!-- ── Header ── -->
+      <header class="hero-bar">
+        <div>
+          <p class="eyebrow">DS2 Course Project · VIT · 2025–26</p>
+          <h1>Disaster Relief Coordinator</h1>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-card">
+            <span class="stat-label">Cycle</span>
+            <strong id="cycleCounter">0</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Heap Min</span>
+            <strong id="heapMinLabel">–</strong>
+          </div>
+        </div>
+      </header>
+
+      <!-- ── Main dashboard ── -->
+      <main class="dashboard-grid">
+        <!-- Map -->
+        <section class="panel panel-map">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Live Geography</p>
+              <h2>Relief Map</h2>
+            </div>
+            <span class="panel-badge">Leaflet</span>
+          </div>
+          <div id="map" class="viz-slot"></div>
+        </section>
+
+        <!-- Fibonacci Heap -->
+        <section class="panel panel-heap">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Priority Queue</p>
+              <h2>Fibonacci Heap</h2>
+            </div>
+            <span class="panel-badge">D3</span>
+          </div>
+          <div id="heapViz" class="viz-slot"></div>
+        </section>
+
+        <!-- Supporting DS -->
+        <section class="panel panel-tabs">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Supporting Structures</p>
+              <h2>Trie · Skip List · Union-Find</h2>
+            </div>
+          </div>
+          <div class="tabs">
+            <button class="tab-button is-active" data-tab="trie">Trie</button>
+            <button class="tab-button" data-tab="skiplist">Skip List</button>
+            <button class="tab-button" data-tab="unionfind">Union-Find</button>
+          </div>
+          <div class="tab-panels">
+            <div class="tab-panel is-active" data-panel="trie">
+              <div id="trieViz" class="viz-slot"></div>
+            </div>
+            <div class="tab-panel" data-panel="skiplist">
+              <div id="skipListViz" class="viz-slot"></div>
+            </div>
+            <div class="tab-panel" data-panel="unionfind">
+              <div id="unionFindViz" class="viz-slot"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- ── Dispatch log ── -->
+      <section class="panel panel-log">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Execution Trace</p>
+            <h2>Dispatch Log</h2>
+          </div>
+          <span class="panel-badge">Auto-refresh 2s</span>
+        </div>
+        <div id="dispatchLog" class="dispatch-log"></div>
+      </section>
+    </div>
+
+    <!-- Scripts -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      crossorigin=""
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="js/map.js"></script>
+    <script src="js/heapViz.js"></script>
+    <script src="js/trieViz.js"></script>
+    <script src="js/skipListViz.js"></script>
+    <script src="js/unionFindViz.js"></script>
+
+    <script>
+      // ── Tab switching ──
+      const tabButtons = Array.from(document.querySelectorAll(".tab-button"));
+      const tabPanels = Array.from(document.querySelectorAll(".tab-panel"));
+
+      tabButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const target = btn.dataset.tab;
+          tabButtons.forEach((b) => b.classList.toggle("is-active", b === btn));
+          tabPanels.forEach((p) =>
+            p.classList.toggle("is-active", p.dataset.panel === target),
+          );
+        });
+      });
+
+      // ── State loader ──
+      async function loadState() {
+        try {
+          const res = await fetch(`data/state.json?ts=${Date.now()}`, {
+            cache: "no-store",
+          });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const state = await res.json();
+          window.__reliefState = state;
+
+          document.getElementById("cycleCounter").textContent =
+            state.cycle ?? 0;
+          document.getElementById("heapMinLabel").textContent =
+            state.heap?.min_id ?? "–";
+
+          renderMapState(state);
+          renderHeap(state.heap || { nodes: [], min_id: -1 }, state.zones || []);
+          renderTriePath(state.trie_path || []);
+          renderSkipList(state.skip_list || { levels: [] });
+          renderUnionFind(
+            state.union_find || { components: [] },
+            state.zones || [],
+          );
+          renderDispatchLog(
+            state.dispatch_log || [],
+            state.zones || [],
+            state.depots || [],
+          );
+        } catch (err) {
+          console.error("Failed to load state.json", err);
+        }
+      }
+
+      loadState();
+      setInterval(loadState, 2000);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Pune Depot",
+    "lat": 18.5204,
+    "lng": 73.8567,
+    "food_stock": 5000,
+    "medicine_stock": 2000,
+    "vehicles": 12,
+    "is_active": true
+  },
+  {
+    "id": 2,
+    "name": "Mumbai Port Depot",
+    "lat": 19.076,
+    "lng": 72.8777,
+    "food_stock": 4200,
+    "medicine_stock": 1700,
+    "vehicles": 10,
+    "is_active": true
+  },
+  {
+    "id": 3,
+    "name": "Nagpur Central Depot",
+    "lat": 21.1458,
+    "lng": 79.0882,
+    "food_stock": 3600,
+    "medicine_stock": 1500,
+    "vehicles": 9,
+    "is_active": true
+  },
+  {
+    "id": 4,
+    "name": "Aurangabad Depot",
+    "lat": 19.8762,
+    "lng": 75.3433,
+    "food_stock": 2800,
+    "medicine_stock": 1200,
+    "vehicles": 7,
+    "is_active": true
+  }
+]

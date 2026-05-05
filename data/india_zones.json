@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "name": "Nashik",
+    "lat": 19.9975,
+    "lng": 73.7898,
+    "severity": 8,
+    "population": 150000,
+    "food_needed": 500,
+    "medicine_needed": 200
+  },
+  {
+    "id": 2,
+    "name": "Pune",
+    "lat": 18.5204,
+    "lng": 73.8567,
+    "severity": 6,
+    "population": 220000,
+    "food_needed": 400,
+    "medicine_needed": 150
+  },
+  {
+    "id": 3,
+    "name": "Mumbai",
+    "lat": 19.076,
+    "lng": 72.8777,
+    "severity": 9,
+    "population": 500000,
+    "food_needed": 900,
+    "medicine_needed": 350
+  },
+  {
+    "id": 4,
+    "name": "Nagpur",
+    "lat": 21.1458,
+    "lng": 79.0882,
+    "severity": 7,
+    "population": 180000,
+    "food_needed": 450,
+    "medicine_needed": 180
+  },
+  {
+    "id": 5,
+    "name": "Aurangabad",
+    "lat": 19.8762,
+    "lng": 75.3433,
+    "severity": 5,
+    "population": 130000,
+    "food_needed": 320,
+    "medicine_needed": 110
+  },
+  {
+    "id": 6,
+    "name": "Kolhapur",
+    "lat": 16.705,
+    "lng": 74.2433,
+    "severity": 6,
+    "population": 95000,
+    "food_needed": 280,
+    "medicine_needed": 90
+  },
+  {
+    "id": 7,
+    "name": "Solapur",
+    "lat": 17.6599,
+    "lng": 75.9064,
+    "severity": 7,
+    "population": 140000,
+    "food_needed": 360,
+    "medicine_needed": 140
+  },
+  {
+    "id": 8,
+    "name": "Amravati",
+    "lat": 20.9374,
+    "lng": 77.7796,
+    "severity": 4,
+    "population": 80000,
+    "food_needed": 200,
+    "medicine_needed": 70
+  },
+  {
+    "id": 9,
+    "name": "Ratnagiri",
+    "lat": 16.9902,
+    "lng": 73.312,
+    "severity": 5,
+    "population": 60000,
+    "food_needed": 180,
+    "medicine_needed": 60
+  },
+  {
+    "id": 10,
+    "name": "Satara",
+    "lat": 17.6805,
+    "lng": 74.0183,
+    "severity": 6,
+    "population": 70000,
+    "food_needed": 210,
+    "medicine_needed": 80
+  }
+]
